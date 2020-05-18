@@ -16,7 +16,7 @@ case class docs(text: String) extends scala.annotation.Annotation
   * Annotate a sealed trait or case class definition with this annotation
   * to define its schema title.
   *
-  * @param text Title of the schema
+  * @param value Title of the schema
   */
 case class title(value: String) extends scala.annotation.Annotation
 

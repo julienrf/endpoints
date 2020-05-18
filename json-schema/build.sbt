@@ -25,12 +25,25 @@ lazy val `json-schema-generic` =
     .crossType(CrossType.Pure)
     .in(file("json-schema-generic"))
     .settings(
+      Compile / unmanagedSourceDirectories ++= {
+        def extraDir(suffix: String) =
+          CrossType.Pure.sharedSrcDir(baseDirectory.value, "main").toList.map(dir => file(dir.getPath + suffix))
+        CrossVersion.partialVersion(scalaVersion.value) match {
+          case Some((0, _)) => extraDir("-3")
+          case _            => extraDir("-2")
+        }
+      },
       publishSettings,
-      `scala 2.12 to dotty`, // Only pretend to make sbt happy
+      `scala 2.12 to dotty`,
       name := "endpoints-json-schema-generic",
-      libraryDependencies += ("com.chuusai" %%% "shapeless" % "2.3.3").withDottyCompat(scalaVersion.value),
+      libraryDependencies ++= {
+        CrossVersion.partialVersion(scalaVersion.value) match {
+          case Some((2, _)) => Seq("com.chuusai" %%% "shapeless" % "2.3.3")
+          case _            => Nil
+        }
+      },
       addScalaTestCrossDependency,
-      (Test / boilerplateSource) := baseDirectory.value / ".." / "src" / "test" / "boilerplate"
+      Test / boilerplateSource := baseDirectory.value / ".." / "src" / "test" / "boilerplate"
     )
     .enablePlugins(spray.boilerplate.BoilerplatePlugin)
     .dependsOnLocalCrossProjects("json-schema")

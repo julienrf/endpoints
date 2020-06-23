@@ -35,3 +35,6 @@ val build = project.in(file(".")).dependsOn(`sbt-assets`)
 ivyLoggingLevel in ThisBuild := UpdateLogging.Quiet
 
 addSbtPlugin("ch.epfl.lamp" % "sbt-dotty" % "0.4.1")
+
+addSbtPlugin("ch.epfl.scala" % "sbt-compatibility" % "0.0.9")
+addSbtPlugin("io.github.alexarchambault.sbt" % "sbt-eviction-rules" % "0.2.0")

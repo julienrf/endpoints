@@ -29,3 +29,8 @@ Global / onChangedBuildSource := ReloadOnSourceChanges
 ThisBuild / sonatypeProjectHosting := Some(
   GitHubHosting("endpoints4s", "endpoints4s", "julien@richard-foy.fr")
 )
+
+ThisBuild / evictionRules ++= Seq(
+  "org.typelevel" %%% "cats*" % "semver",
+  "co.fs2" %%% "fs2*" % "semver"
+)
